@@ -75,14 +75,19 @@ class BlogPosts {
 
     createPostCard(post) {
         return `
-            <article class="card border-0 shadow-sm mb-4 transition">
+            <article class="card border-0 rounded-3 shadow-sm hover-shadow-md mb-4">
                 <div class="card-body p-4">
-                    <div class="text-secondary small mb-2">${this.formatDate(post.date)}</div>
-                    <h2 class="card-title h3 mb-3">
-                        <a href="${post.file}" class="text-decoration-none link-dark">${post.title}</a>
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div class="text-secondary small">
+                            <i class="bi bi-calendar"></i> ${this.formatDate(post.date)}
+                        </div>
+                    </div>
+                    <h2 class="card-title h4 mb-3">
+                        <a href="${post.file}" class="text-decoration-none link-dark stretched-link">
+                            ${post.title}
+                        </a>
                     </h2>
-                    <p class="card-text text-secondary mb-3">${post.excerpt}</p>
-                    <a href="${post.file}" class="text-primary text-decoration-none fw-semibold">더 읽기 →</a>
+                    <p class="card-text text-secondary mb-0">${post.excerpt}</p>
                 </div>
             </article>
         `;
@@ -111,7 +116,12 @@ class BlogPosts {
     async renderPosts() {
         const posts = await this.loadPosts();
         if (posts.length === 0) {
-            this.postsContainer.innerHTML = '<div class="alert alert-info">아직 작성된 포스트가 없습니다.</div>';
+            this.postsContainer.innerHTML = `
+                <div class="alert alert-info d-flex align-items-center" role="alert">
+                    <i class="bi bi-info-circle me-2"></i>
+                    <div>아직 작성된 포스트가 없습니다.</div>
+                </div>
+            `;
             return;
         }
 
